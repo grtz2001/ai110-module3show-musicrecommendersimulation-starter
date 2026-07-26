@@ -20,14 +20,25 @@ def main() -> None:
 
     recommendations = recommend_songs(user_prefs, songs, k=5)
 
-    print("\nTop recommendations:\n")
-    for rec in recommendations:
+    headers = ("#", "Title", "Artist", "Score", "Reasons")
+    rows = [headers]
+    for rank, rec in enumerate(recommendations, start=1):
         # You decide the structure of each returned item.
         # A common pattern is: (song, score, explanation)
         song, score, explanation = rec
-        print(f"{song['title']} - Score: {score:.2f}")
-        print(f"Because: {explanation}")
-        print()
+        rows.append((str(rank), song["title"], song["artist"], f"{score:.2f}", explanation.replace("; ", ", ")))
+
+    widths = [max(len(row[col]) for row in rows) for col in range(len(headers))]
+
+    def print_row(row):
+        print(" | ".join(cell.ljust(widths[i]) for i, cell in enumerate(row)))
+
+    print("\nTop recommendations:\n")
+    print_row(headers)
+    print("-+-".join("-" * w for w in widths))
+    for row in rows[1:]:
+        print_row(row)
+    print()
 
 
 if __name__ == "__main__":

@@ -104,12 +104,19 @@ You can add more tests in `tests/test_recommender.py`.
 Paste a sample of your recommender's output here as a text block so a reader can see what it produces:
 
 ```
-# e.g.:
-# User profile: genre=indie, mood=chill, energy=low
-# Recommendations:
-#   1. ...
-#   2. ...
-#   3. ...
+PS C:\Users\marit\OneDrive\Escritorio\ai110-module3show-musicrecommendersimulation-starter> python .\src\main.py
+Loaded songs: 18
+
+Top recommendations:
+
+# | Title            | Artist        | Score | Reasons                                                        
+--+------------------+---------------+-------+----------------------------------------------------------------
+1 | Sunrise City     | Neon Echo     | 3.49  | genre match (+2.0), mood match (+1.0), energy closeness (+0.49)
+2 | Gym Hero         | Max Pulse     | 2.44  | genre match (+2.0), energy closeness (+0.43)                   
+3 | Rooftop Lights   | Indigo Parade | 1.48  | mood match (+1.0), energy closeness (+0.48)                    
+4 | Night Drive Loop | Neon Echo     | 0.47  | energy closeness (+0.47)                                       
+5 | Storm Runner     | Voltline      | 0.45  | energy closeness (+0.45)                                       
+
 ```
 
 **Screenshot or video** *(optional)*: <!-- Insert a screenshot or demo video link here -->
