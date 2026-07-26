@@ -28,6 +28,39 @@ Some prompts to answer:
 - How do you choose which songs to recommend
 
 You can include a simple diagram or bullet list if helpful.
+Answer:
+Song — holds title, artist, genre, and mood as labels, plus the three features that drive scoring: energy, valence, and danceability. I use those three because the others (tempo, acousticness) just repeat energy.
+
+UserProfile — stores the user's target value for each of those three features, e.g. energy 0.4, valence 0.6, danceability 0.6. Set by hand or averaged from liked songs.
+
+Recommender scoring — for each feature, score = 1 − the gap between the song and the target. Closer means higher. Average the three into one score per song.
+
+Picking songs — score every song, sort high to low, drop the current song, return the top few.
+
+-
+
+The system recommends songs by matching each song against a user's taste profile. It runs in three steps:
+
+1. Input. The user profile holds a favorite genre, a favorite mood, and three target values: energy, valence, and danceability. The songs come from songs.csv.
+
+2. Process (scoring). The system loops through every song and gives each one a score based on how well it matches the profile. Genre and mood are all-or-nothing matches. The three numeric features score by closeness—the nearer a song's value is to the target, the more points it earns.
+
+3. Output (ranking). Once every song has a score, the system sorts them high to low, drops the song already playing, and returns the top few.
+
+Algorithm Recipe
+score = 2.0  if genre matches
+      + 1.0  if mood matches
+      + 0.5 × (1 − |energy − target_energy|)
+      + 0.5 × (1 − |valence − target_valence|)
+      + 0.5 × (1 − |danceability − target_danceability|)
+
+Max score is 4.5. Genre and mood make up most of it (3.0), so they lead. The numeric features (1.5 total) fine-tune the order within a match.
+
+Possible Biases
+-Genre gets too much weight. Genre is worth 2.0 points—the biggest single lever. A great song in a different genre can lose to a weak song in the right genre. The system may miss good matches just because the genre label is off.
+-Mood is easy to miss. Moods are very specific (angsty, chill, moody, dreamy...). A song has to match the exact label to earn the point, so close-but-not-exact moods get nothing.
+-Scores bunch up. The closeness math rarely hits 0, so even bad matches score something. Songs can end up with similar totals, making the order between them less meaningful.
+-No sense of popularity or novelty. It only measures similarity to your taste. It won't surface a hit you'd love that sits outside your usual profile.
 
 ---
 
