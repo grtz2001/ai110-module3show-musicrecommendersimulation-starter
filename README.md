@@ -118,9 +118,6 @@ Top recommendations:
 5 | Storm Runner     | Voltline      | 0.45  | energy closeness (+0.45)                                       
 
 ```
-
-**Screenshot or video** *(optional)*: <!-- Insert a screenshot or demo video link here -->
-
 ---
 
 ## Experiments You Tried
