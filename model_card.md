@@ -2,60 +2,35 @@
 
 ## 1. Model Name  
 
-Give your model a short, descriptive name.  
-Example: **VibeFinder 1.0**  
+**MoodMatch 1.0**
 
 ---
 
 ## 2. Intended Use  
 
-Describe what your recommender is designed to do and who it is for. 
-
-Prompts:  
-
-- What kind of recommendations does it generate  
-- What assumptions does it make about the user  
-- Is this for real users or classroom exploration  
+MoodMatch suggests songs based on genre, mood, and energy. It's a classroom project, not a real product. It assumes the user can name one genre, one mood, and one energy level (0 to 1) that describes what they want.
 
 ---
 
 ## 3. How the Model Works  
 
-Explain your scoring approach in simple language.  
+Each song gets points based on how well it fits what the user wants. Same genre as the user? +1 point. Same mood? +1 point. Close energy level? Up to +1 point, less the further apart they are. All the points get added up, and the highest-scoring songs win.
 
-Prompts:  
-
-- What features of each song are used (genre, energy, mood, etc.)  
-- What user preferences are considered  
-- How does the model turn those into a score  
-- What changes did you make from the starter logic  
-
-Avoid code here. Pretend you are explaining the idea to a friend who does not program.
+I changed the starting weights: genre used to be worth double mood, and energy was worth half a point. I made genre and energy equal instead, to see if it changed the results.
 
 ---
 
 ## 4. Data  
 
-Describe the dataset the model uses.  
+The catalog has 18 songs. Genres include pop, rock, lofi, metal, classical, jazz, folk, and more — most genres only have one song each. Moods include happy, chill, intense, romantic, and others. I didn't add or remove any songs.
 
-Prompts:  
-
-- How many songs are in the catalog  
-- What genres or moods are represented  
-- Did you add or remove data  
-- Are there parts of musical taste missing in the dataset  
+Missing: no blended genres like "pop rock," no mood called "angsty," and few songs at medium energy levels. Fast, high-energy genres and slow, low-energy genres never overlap.
 
 ---
 
 ## 5. Strengths  
 
-Where does your system seem to work well  
-
-Prompts:  
-
-- User types for which it gives reasonable results  
-- Any patterns you think your scoring captures correctly  
-- Cases where the recommendations matched your intuition  
+It works well when the user's genre and mood actually exist in the catalog. Chill Lofi and Deep Intense Rock both got clean, sensible top picks that matched their genre, mood, and energy all at once. When there's a real match in the data, the scoring finds it.
 
 ---
 
@@ -70,6 +45,8 @@ Prompts:
 - Cases where the system overfits to one preference  
 - Ways the scoring might unintentionally favor some users  
 
+In this catalog, intense genres (metal, rock, EDM) are always high energy, and mellow genres (classical, ambient, folk) are always low energy. So a classical fan who wants high energy gets metal or rock songs instead — pure energy match, wrong genre. The system never says "no good match found." It just confidently picks the highest score anyway.
+
 ---
 
 ## 7. Evaluation  
@@ -83,29 +60,27 @@ Prompts:
 - What surprised you  
 - Any simple tests or comparisons you ran  
 
-No need for numeric metrics unless you created some.
+I tested three profiles: **Pop-Rock Angsty** (pop rock, angsty, energy 0.65), **Chill Lofi** (lofi, chill, energy 0.35), and **Deep Intense Rock** (rock, intense, energy 0.90).
+
+What surprised me: "pop rock" and "angsty" don't exist in the catalog, so Pop-Rock Angsty got zero genre or mood credit anywhere. It still confidently returned a top pick — "Shadow Ledger," a hip-hop song — based on energy alone.
+
+**Comparisons:**
+
+- **Pop-Rock Angsty vs. Deep Intense Rock:** Both want "rock," but only the exact word "rock" exists in the data. Deep Intense Rock matches genre and mood; Pop-Rock Angsty matches neither.
+- **Deep Intense Rock vs. Chill Lofi:** Opposite results (high energy vs. low energy), and both are clean matches. Makes sense since their genres and moods are both real, just at opposite energy levels.
+- **Chill Lofi vs. Pop-Rock Angsty:** Chill Lofi is a real match; Pop-Rock Angsty is just an energy coincidence. But both get shown the same confident way, with a precise-looking score.
 
 ---
 
 ## 8. Future Work  
 
-Ideas for how you would improve the model next.  
-
-Prompts:  
-
-- Additional features or preferences  
-- Better ways to explain recommendations  
-- Improving diversity among the top results  
-- Handling more complex user tastes  
+- Let genres partly match (like "pop rock" counting toward "pop" and "rock").
+- Tell the user when there's no real match, instead of quietly guessing.
+- Limit how many songs from the same genre or artist show up in the top results.
+- Let users weigh genre, mood, and energy themselves, instead of fixed points.
 
 ---
 
 ## 9. Personal Reflection  
 
-A few sentences about your experience.  
-
-Prompts:  
-
-- What you learned about recommender systems  
-- Something unexpected or interesting you discovered  
-- How this changed the way you think about music recommendation apps  
+I learned that small changes to scoring weights can flip which song wins. The most surprising part was that the system never says "I'm not sure" — it always picks a top song, even when nothing really matches, and shows it with the same confidence either way. This made me realize real recommendation apps probably do this too, and it's worth being skeptical of a confident-looking result.

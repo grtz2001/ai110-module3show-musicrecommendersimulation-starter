@@ -68,16 +68,16 @@ def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
     Required by recommend_songs() and src/main.py
 
     Algorithm Recipe (see README.md):
-      +2.0 if genre matches
+      +1.0 if genre matches (halved from +2.0)
       +1.0 if mood matches
-      +0.5 x (1 - |energy - target_energy|)
+      +1.0 x (1 - |energy - target_energy|) (doubled from +0.5x)
     """
     score = 0.0
     reasons = []
 
     if song.get("genre") == user_prefs.get("genre"):
-        score += 2.0
-        reasons.append("genre match (+2.0)")
+        score += 1.0
+        reasons.append("genre match (+1.0)")
 
     if song.get("mood") == user_prefs.get("mood"):
         score += 1.0
@@ -86,7 +86,7 @@ def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
     target_energy = user_prefs.get("energy")
     if target_energy is not None:
         energy = song.get("energy", 0)
-        energy_points = 0.5 * (1 - abs(energy - target_energy))
+        energy_points = 1.0 * (1 - abs(energy - target_energy))
         score += energy_points
         reasons.append(f"energy closeness (+{energy_points:.2f})")
 
