@@ -130,6 +130,50 @@ Use this section to document the experiments you ran. For example:
 - What happened when you changed the weight on genre from 2.0 to 0.5
 - What happened when you added tempo or valence to the score
 - How did your system behave for different types of users
+ user_prefs = {"genre": "pop rock", "mood": "angsty", "energy": 0.65}
+```
+Loaded songs: 18
+
+Top recommendations:
+
+# | Title            | Artist        | Score | Reasons                 
+--+------------------+---------------+-------+-------------------------
+1 | Shadow Ledger    | Trap Cartel   | 0.49  | energy closeness (+0.49)
+2 | Night Drive Loop | Neon Echo     | 0.45  | energy closeness (+0.45)
+3 | Rooftop Lights   | Indigo Parade | 0.45  | energy closeness (+0.45)
+4 | Island Memories  | Solar Roots   | 0.45  | energy closeness (+0.45)
+5 | Sunrise City     | Neon Echo     | 0.42  | energy closeness (+0.42)
+
+```
+ user_prefs = {"genre": "lofi", "mood": "chill", "energy": 0.35}
+
+```
+Loaded songs: 18
+
+Top recommendations:
+
+# | Title               | Artist         | Score | Reasons                                                        
+--+---------------------+----------------+-------+----------------------------------------------------------------
+1 | Library Rain        | Paper Lanterns | 3.50  | genre match (+2.0), mood match (+1.0), energy closeness (+0.50)
+2 | Midnight Coding     | LoRoom         | 3.46  | genre match (+2.0), mood match (+1.0), energy closeness (+0.46)
+3 | Focus Flow          | LoRoom         | 2.48  | genre match (+2.0), energy closeness (+0.47)                   
+4 | Spacewalk Thoughts  | Orbit Bloom    | 1.47  | mood match (+1.0), energy closeness (+0.47)                    
+5 | Coffee Shop Stories | Slow Stereo    | 0.49  | energy closeness (+0.49)         
+```
+  user_prefs = {"genre": "rock", "mood": "intense", "energy": 0.90}
+```
+Loaded songs: 18
+
+Top recommendations:
+
+# | Title         | Artist        | Score | Reasons                                                        
+--+---------------+---------------+-------+----------------------------------------------------------------
+1 | Storm Runner  | Voltline      | 3.50  | genre match (+2.0), mood match (+1.0), energy closeness (+0.49)
+2 | Gym Hero      | Max Pulse     | 1.48  | mood match (+1.0), energy closeness (+0.48)                    
+3 | Skyline Pulse | Kinetic Bloom | 0.49  | energy closeness (+0.49)                                       
+4 | Iron Verdict  | Skullforge    | 0.47  | energy closeness (+0.47)                                       
+5 | Sunrise City  | Neon Echo     | 0.46  | energy closeness (+0.46)         
+```
 
 ---
 
